@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TAMAN — Web Dev & AI Automation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --bg2: #f7f6f3;
+    --bg3: #f0efe9;
+    --text: #0f0f0e;
+    --text2: #5a5a57;
+    --text3: #9a9994;
+    --border: rgba(15,15,14,0.12);
+    --border2: rgba(15,15,14,0.22);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111110;
+      --bg2: #1a1a18;
+      --bg3: #222220;
+      --text: #f0efe9;
+      --text2: #9a9994;
+      --text3: #5a5a57;
+      --border: rgba(240,239,233,0.1);
+      --border2: rgba(240,239,233,0.2);
+    }
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+    padding: 1.1rem 0;
+  }
+
+  .nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .logo span {
+    color: var(--text3);
+    font-weight: 400;
+    font-size: 13px;
+    margin-left: 5px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text2);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 7px 18px;
+    border-radius: 6px;
+    border: 0.5px solid var(--border2);
+    background: none;
+    color: var(--text);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+
+  .nav-cta:hover { background: var(--bg2); }
+
+  /* HERO */
+  .hero {
+    padding: 5.5rem 0 4.5rem;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .eline {
+    width: 26px;
+    height: 1px;
+    background: var(--text3);
+  }
+
+  .etext {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text3);
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(38px, 6vw, 58px);
+    line-height: 1.0;
+    letter-spacing: -1.5px;
+    margin-bottom: 2rem;
+    max-width: 600px;
+  }
+
+  .hero-title .muted {
+    color: var(--text3);
+    font-weight: 400;
+  }
+
+  .hero-body {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.75;
+    max-width: 400px;
+    font-weight: 300;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    flex-shrink: 0;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text3);
+    margin-top: 5px;
+  }
+
+  /* SERVICES BAR */
+  .services-bar {
+    display: flex;
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 4.5rem;
+  }
+
+  .sitem {
+    flex: 1;
+    padding: 1rem 1.2rem;
+    border-right: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.15s;
+  }
+
+  .sitem:hover { background: var(--bg2); }
+  .sitem:last-child { border-right: none; }
+
+  .sicon {
+    font-size: 17px;
+    color: var(--text2);
+  }
+
+  .sname {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text2);
+    white-space: nowrap;
+  }
+
+  /* SECTION LABELS */
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+
+  /* PROJECTS LIST */
+  .plist {
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 4rem;
+  }
+
+  .prow {
+    display: grid;
+    grid-template-columns: 2fr 1.1fr 110px 28px;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    border-bottom: 0.5px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .prow:last-child { border-bottom: none; }
+  .prow:hover { background: var(--bg2); }
+  .prow:hover .parr { opacity: 1; }
+
+  .pname {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 3px;
+    color: var(--text);
+  }
+
+  .pdesc {
+    font-size: 12px;
+    color: var(--text2);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .ptags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .ptag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 0.5px solid var(--border);
+    color: var(--text3);
+    background: transparent;
+  }
+
+  .ptag.ai   { border-color: #AFA9EC; color: #534AB7; background: #EEEDFE; }
+  .ptag.web  { border-color: #9FE1CB; color: #0F6E56; background: #E1F5EE; }
+  .ptag.auto { border-color: #FAC775; color: #854F0B; background: #FAEEDA; }
+
+  @media (prefers-color-scheme: dark) {
+    .ptag.ai   { background: #26215C; color: #AFA9EC; border-color: #3C3489; }
+    .ptag.web  { background: #04342C; color: #5DCAA5; border-color: #085041; }
+    .ptag.auto { background: #412402; color: #EF9F27; border-color: #633806; }
+  }
+
+  .pstat {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--text3);
+  }
+
+  .sdot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .dlive  { background: #1D9E75; }
+  .dbuild { background: #EF9F27; }
+
+  .parr {
+    font-size: 16px;
+    color: var(--text3);
+    opacity: 0;
+    transition: opacity 0.15s;
+    justify-self: end;
+  }
+
+  /* CASE STUDIES */
+  .cgrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 4rem;
+  }
+
+  .ccard {
+    background: var(--bg);
+    padding: 2rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .ccard:hover { background: var(--bg2); }
+  .ccard:hover .carr { opacity: 1; transform: translate(2px, -2px); }
+
+  .carr {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    font-size: 15px;
+    color: var(--text3);
+    opacity: 0;
+    transition: all 0.2s;
+  }
+
+  .cicon {
+    width: 44px;
+    height: 44px;
+    border: 0.5px solid var(--border);
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.1rem;
+    font-size: 18px;
+    color: var(--text2);
+  }
+
+  .ctitle {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 0.5rem;
+    max-width: 240px;
+    line-height: 1.3;
+  }
+
+  .cdesc {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.65;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+
+  /* CONTACT BLOCK */
+  .cblock {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem 2.25rem;
+    margin-bottom: 1px;
+    flex-wrap: wrap;
+  }
+
+  .cbtitle {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  .cbsub {
+    font-size: 13px;
+    color: var(--text2);
+    font-weight: 300;
+  }
+
+  .bacts {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .bpri {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 22px;
+    border-radius: 6px;
+    border: none;
+    background: var(--text);
+    color: var(--bg);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    transition: opacity 0.15s;
+  }
+
+  .bpri:hover { opacity: 0.8; }
+
+  .bout {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 9px 22px;
+    border-radius: 6px;
+    border: 0.5px solid var(--border2);
+    background: none;
+    color: var(--text);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    transition: background 0.15s;
+  }
+
+  .bout:hover { background: var(--bg2); }
+
+  /* FOOTER */
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 0;
+    border-top: 0.5px solid var(--border);
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .fbrand {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: var(--text);
+  }
+
+  .fmeta {
+    font-size: 12px;
+    color: var(--text3);
+  }
+
+  .flinks {
+    display: flex;
+    gap: 20px;
+  }
+
+  .flink {
+    font-size: 12px;
+    color: var(--text3);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.15s;
+  }
+
+  .flink:hover { color: var(--text); }
+
+  /* ICONS — using Tabler via CDN */
+  @media (max-width: 640px) {
+    .prow { grid-template-columns: 1fr; gap: 8px; }
+    .parr { display: none; }
+    .cgrid { grid-template-columns: 1fr; }
+    .cblock { flex-direction: column; align-items: flex-start; }
+    .services-bar { flex-direction: column; }
+    .sitem { border-right: none; border-bottom: 0.5px solid var(--border); }
+    .sitem:last-child { border-bottom: none; }
+    .hero-body { flex-direction: column; align-items: flex-start; }
+    .hero-stats { gap: 1.5rem; }
+  }
+</style>
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="logo">TAMAN <span>/ Agency</span></a>
+      <ul class="nav-links">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#cases">Case Studies</a></li>
+        <li><a href="#contact" class="nav-cta">Start a project</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="eyebrow">
+      <span class="eline"></span>
+      <span class="etext">Web Development &amp; AI Automation</span>
+    </div>
+    <h1 class="hero-title">
+      We automate what<br>
+      slows businesses <span class="muted">down.</span>
+    </h1>
+    <div class="hero-body">
+      <p class="hero-desc">
+        TAMAN builds web systems and AI-powered workflows for businesses
+        that want to move faster — from first contact page to full automation stack.
+      </p>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">12+</div>
+          <div class="stat-label">Projects shipped</div>
+        </div>
+        <div>
+          <div class="stat-num">3×</div>
+          <div class="stat-label">Avg. time saved</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES BAR -->
+  <div class="services-bar">
+    <div class="sitem">
+      <i class="ti ti-world sicon" aria-hidden="true"></i>
+      <span class="sname">Web Presence</span>
+    </div>
+    <div class="sitem">
+      <i class="ti ti-robot sicon" aria-hidden="true"></i>
+      <span class="sname">AI Integration</span>
+    </div>
+    <div class="sitem">
+      <i class="ti ti-settings-automation sicon" aria-hidden="true"></i>
+      <span class="sname">Workflow Automation</span>
+    </div>
+    <div class="sitem">
+      <i class="ti ti-messages sicon" aria-hidden="true"></i>
+      <span class="sname">Lead &amp; Contact Systems</span>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div id="work" class="section-label">All work</div>
+
+  <div class="plist">
+    <a class="prow" href="#">
+      <div>
+        <div class="pname">BizPresence</div>
+        <div class="pdesc">Full web presence for businesses with no website — domain to live site in days.</div>
+      </div>
+      <div class="ptags">
+        <span class="ptag web">Web dev</span>
+        <span class="ptag">Next.js</span>
+        <span class="ptag">Vercel</span>
+      </div>
+      <div class="pstat"><span class="sdot dlive"></span>Live</div>
+      <i class="ti ti-arrow-up-right parr" aria-hidden="true"></i>
+    </a>
+
+    <a class="prow" href="#">
+      <div>
+        <div class="pname">SmartInbox</div>
+        <div class="pdesc">AI email triage — routes, labels and drafts replies automatically for SMEs.</div>
+      </div>
+      <div class="ptags">
+        <span class="ptag ai">AI</span>
+        <span class="ptag auto">Automation</span>
+        <span class="ptag">OpenAI</span>
+      </div>
+      <div class="pstat"><span class="sdot dlive"></span>Live</div>
+      <i class="ti ti-arrow-up-right parr" aria-hidden="true"></i>
+    </a>
+
+    <a class="prow" href="#">
+      <div>
+        <div class="pname">QuickContact</div>
+        <div class="pdesc">Lightweight lead capture &amp; CRM for small businesses. Zero overhead.</div>
+      </div>
+      <div class="ptags">
+        <span class="ptag web">Web dev</span>
+        <span class="ptag">React</span>
+        <span class="ptag">Supabase</span>
+      </div>
+      <div class="pstat"><span class="sdot dlive"></span>Live</div>
+      <i class="ti ti-arrow-up-right parr" aria-hidden="true"></i>
+    </a>
+
+    <a class="prow" href="#">
+      <div>
+        <div class="pname">FlowDesk</div>
+        <div class="pdesc">AI chatbot + booking system — handles 70% of client queries autonomously.</div>
+      </div>
+      <div class="ptags">
+        <span class="ptag ai">AI</span>
+        <span class="ptag web">Web dev</span>
+        <span class="ptag">LangChain</span>
+      </div>
+      <div class="pstat"><span class="sdot dbuild"></span>In progress</div>
+      <i class="ti ti-arrow-up-right parr" aria-hidden="true"></i>
+    </a>
+
+    <a class="prow" href="#">
+      <div>
+        <div class="pname">LocalLaunch</div>
+        <div class="pdesc">Templated web system for local businesses — booking, forms, SEO-ready, same week.</div>
+      </div>
+      <div class="ptags">
+        <span class="ptag web">Web dev</span>
+        <span class="ptag auto">Automation</span>
+        <span class="ptag">Netlify</span>
+      </div>
+      <div class="pstat"><span class="sdot dlive"></span>Live</div>
+      <i class="ti ti-arrow-up-right parr" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <!-- CASE STUDIES -->
+  <div id="cases" class="section-label">Case studies</div>
+
+  <div class="cgrid">
+    <a class="ccard" href="#">
+      <i class="ti ti-arrow-up-right carr" aria-hidden="true"></i>
+      <div class="cicon"><i class="ti ti-robot" aria-hidden="true"></i></div>
+      <div class="ctitle">AI-first email ops for a logistics firm</div>
+      <p class="cdesc">Cut manual email handling by 68% using a custom GPT-4 triage pipeline integrated with their existing inbox.</p>
+      <div class="ptags">
+        <span class="ptag ai">AI</span>
+        <span class="ptag auto">Automation</span>
+        <span class="ptag">OpenAI API</span>
+        <span class="ptag">Zapier</span>
+      </div>
+    </a>
+
+    <a class="ccard" href="#">
+      <i class="ti ti-arrow-up-right carr" aria-hidden="true"></i>
+      <div class="cicon"><i class="ti ti-world" aria-hidden="true"></i></div>
+      <div class="ctitle">Zero to live in 4 days for a Lagos retailer</div>
+      <p class="cdesc">A local shop with no online presence went live with a branded site, contact form and Google Maps integration.</p>
+      <div class="ptags">
+        <span class="ptag web">Web dev</span>
+        <span class="ptag">Next.js</span>
+        <span class="ptag">Tailwind</span>
+        <span class="ptag">Vercel</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- CONTACT -->
+  <div id="contact" class="cblock">
+    <div>
+      <div class="cbtitle">Ready to automate?</div>
+      <p class="cbsub">Tell us what's slowing you down. We'll build the fix.</p>
+    </div>
+    <div class="bacts">
+      <a class="bout" href="https://github.com/YOUR_USERNAME" target="_blank">
+        <i class="ti ti-brand-github" aria-hidden="true"></i> GitHub
+      </a>
+      <a class="bpri" href="mailto:hello@taman.agency">
+        <i class="ti ti-mail" aria-hidden="true"></i> Start a project
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;width:100%;flex-wrap:wrap;gap:1rem;">
+    <span class="fbrand">TAMAN</span>
+    <span class="fmeta">Lagos, Nigeria &middot; 2025</span>
+    <div class="flinks">
+      <a class="flink" href="https://github.com/YOUR_USERNAME" target="_blank">
+        <i class="ti ti-brand-github" aria-hidden="true"></i> GitHub
+      </a>
+      <a class="flink" href="https://twitter.com/YOUR_HANDLE" target="_blank">
+        <i class="ti ti-brand-x" aria-hidden="true"></i> Twitter
+      </a>
+      <a class="flink" href="https://linkedin.com/in/YOUR_PROFILE" target="_blank">
+        <i class="ti ti-brand-linkedin" aria-hidden="true"></i> LinkedIn
+      </a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
