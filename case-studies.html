@@ -179,7 +179,7 @@
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 32px;
     list-style: none;
   }
 
@@ -235,19 +235,6 @@
     position: relative;
     overflow: hidden;
     animation: fadeInUp 0.6s ease-out 0.4s both;
-  }
-
-  .nav-cta::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: var(--accent);
-    transition: left 0.3s ease;
-    z-index: -1;
-    border-radius: 6px;
   }
 
   .nav-cta:hover {
@@ -359,7 +346,7 @@
     border: 0.5px solid var(--border);
     border-radius: 8px;
     overflow: hidden;
-    margin-bottom: 3.5rem;
+    margin-bottom: 6rem;
     animation: fadeInUp 0.8s ease-out 0.4s both;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
@@ -429,7 +416,7 @@
     border: 0.5px solid var(--border);
     border-radius: 8px;
     overflow: hidden;
-    margin-bottom: 3.5rem;
+    margin-bottom: 6rem;
   }
 
   .insight-card {
@@ -445,6 +432,11 @@
     overflow: hidden;
   }
 
+  .insight-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
   .insight-card:nth-child(1) { animation-delay: 0.1s; }
   .insight-card:nth-child(2) { animation-delay: 0.2s; }
   .insight-card:nth-child(3) { animation-delay: 0.3s; }
@@ -457,10 +449,11 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(83, 74, 183, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(83, 74, 183, 0.15) 0%, transparent 70%);
     opacity: 0;
     transition: all 0.4s ease;
     pointer-events: none;
+    z-index: 0;
   }
 
   .insight-card:hover::before {
@@ -579,7 +572,7 @@
     border: 0.5px solid var(--border);
     border-radius: 8px;
     overflow: hidden;
-    margin-bottom: 3.5rem;
+    margin-bottom: 6rem;
     animation: fadeInUp 0.8s ease-out 0.3s both;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
@@ -701,7 +694,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
-    margin-bottom: 3.5rem;
+    margin-bottom: 6rem;
   }
 
   .story-card {
@@ -716,6 +709,11 @@
     animation: fadeInUp 0.6s ease-out both;
     position: relative;
     overflow: hidden;
+  }
+
+  .story-card > * {
+    position: relative;
+    z-index: 1;
   }
 
   .story-card:nth-child(1) { animation-delay: 0.1s; }
@@ -734,6 +732,7 @@
     opacity: 0;
     transition: all 0.4s ease;
     pointer-events: none;
+    z-index: 0;
   }
 
   .story-card:hover::before {
@@ -948,7 +947,8 @@
 
   .bacts {
     display: flex;
-    gap: 10px;
+    gap: 20px;
+    flex-wrap: wrap;
     flex-shrink: 0;
     animation: fadeInUp 0.8s ease-out 0.6s both;
   }
@@ -1038,7 +1038,7 @@
     justify-content: space-between;
     padding: 2rem 0;
     border-top: 0.5px solid var(--border);
-    margin-top: 2.5rem;
+    margin-top: 5rem;
     flex-wrap: wrap;
     gap: 1rem;
     animation: fadeInUp 0.8s ease-out 0.4s both;
@@ -1128,9 +1128,9 @@
     <div class="nav-inner">
       <a href="index.html" class="logo">TAMAN <span>/ Agency</span></a>
       <ul class="nav-links">
-        <li><a href="index.html#work">Work</a></li>
-        <li><a href="case-studies.html" class="active">Case Studies</a></li>
-        <li><a href="index.html#contact" class="nav-cta">Start a project</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="case-studies.html">Case Study</a></li>
+        <li><a href="#contact" class="nav-cta">Start Project</a></li>
       </ul>
     </div>
   </div>
@@ -1181,40 +1181,49 @@
 
   <div class="insight-grid">
 
-    <a class="insight-card scroll-fade" href="https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/the-economic-potential-of-generative-ai" target="_blank" rel="noopener">
+    <a class="insight-card scroll-fade" href="https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/content/state-of-ai-in-the-enterprise.html" target="_blank" rel="noopener">
       <i class="ti ti-arrow-up-right ic-arr" aria-hidden="true"></i>
       <span class="ic-badge ai"><i class="ti ti-robot" aria-hidden="true"></i> AI</span>
       <div class="ic-icon"><i class="ti ti-brain" aria-hidden="true"></i></div>
-      <div class="ic-title">The economic potential of AI for SMEs</div>
-      <p class="ic-desc">McKinsey estimates AI could add $2.6–4.4 trillion annually across industries — with the highest proportional gains going to smaller, faster-moving businesses.</p>
-      <div class="ic-source"><i class="ti ti-external-link" aria-hidden="true"></i> McKinsey &amp; Company</div>
+      <div class="ic-title">The State of AI in the Enterprise 2024-2026</div>
+      <p class="ic-desc">A comprehensive global report surveying over 3,000 business leaders. It highlights that 66% of organizations report significant gains in productivity and efficiency through AI. The report tracks the shift from experimental "pilots" to full-scale "Agentic AI" integrations that handle customer support and supply chain management autonomously.</p>
+      <div class="ic-source"><i class="ti ti-external-link" aria-hidden="true"></i> Deloitte</div>
     </a>
 
-    <a class="insight-card scroll-fade" href="https://www.deloitte.com/global/en/services/consulting/blogs/ai-small-business-impact.html" target="_blank" rel="noopener">
+    <a class="insight-card scroll-fade" href="https://councils.forbes.com/blog/ai-for-small-businesses" target="_blank" rel="noopener">
       <i class="ti ti-arrow-up-right ic-arr" aria-hidden="true"></i>
       <span class="ic-badge ai"><i class="ti ti-robot" aria-hidden="true"></i> AI</span>
-      <div class="ic-icon"><i class="ti ti-clock" aria-hidden="true"></i></div>
-      <div class="ic-title">AI saves small businesses 13+ hrs a week</div>
-      <p class="ic-desc">Deloitte research shows SMEs using AI tools reclaim an average of 13 hours per week from admin, communications, and repetitive tasks — time redirected to growth.</p>
-      <div class="ic-source"><i class="ti ti-external-link" aria-hidden="true"></i> Deloitte Insights</div>
+      <div class="ic-icon"><i class="ti ti-trending-up" aria-hidden="true"></i></div>
+      <div class="ic-title">AI Strategies That Drive Growth for Small Businesses</div>
+      <p class="ic-desc">This source focuses on the immediate ROI for SMEs. It details how AI-powered accounting tools (like those in QuickBooks) and marketing automation allow small teams to act like much larger enterprises. It provides a practical framework for integrating AI without needing a massive technical staff or budget.</p>
+      <div class="ic-source"><i class="ti ti-external-link" aria-hidden="true"></i> Forbes</div>
     </a>
 
-    <a class="insight-card scroll-fade" href="https://www.thinkwithgoogle.com/consumer-insights/consumer-trends/local-search-to-store/" target="_blank" rel="noopener">
+    <a class="insight-card scroll-fade" href="https://www.mdpi.com/2078-2489/16/5/415" target="_blank" rel="noopener">
       <i class="ti ti-arrow-up-right ic-arr" aria-hidden="true"></i>
-      <span class="ic-badge web"><i class="ti ti-world" aria-hidden="true"></i> Web</span>
-      <div class="ic-icon"><i class="ti ti-device-mobile" aria-hidden="true"></i></div>
-      <div class="ic-title">76% of local searches lead to a visit within 24 hrs</div>
-      <p class="ic-desc">Google data shows most local searches convert to a physical visit the same day. Businesses without a web presence are losing foot traffic to competitors who show up in search.</p>
-      <div class="ic-source"><i class="ti ti-external-link" aria-hidden="true"></i> Think With Google</div>
+      <span class="ic-badge ai"><i class="ti ti-robot" aria-hidden="true"></i> AI</span>
+      <div class="ic-icon"><i class="ti ti-book" aria-hidden="true"></i></div>
+      <div class="ic-title">Artificial Intelligence in SMEs (Academic Review)</div>
+      <p class="ic-desc">A systematic review of 50 case studies and research papers published up to 2025. It details specific performance indicators for SMEs, such as how AI-driven CRM systems increase repeat purchases by 20% and how sentiment analysis helps smaller brands compete with larger corporations by deeply understanding customer emotions.</p>
+      <div class="ic-source"><i class="ti ti-external-link" aria-hidden="true"></i> MDPI</div>
     </a>
 
-    <a class="insight-card scroll-fade" href="https://www.statista.com/topics/2436/internet-usage-in-nigeria/" target="_blank" rel="noopener">
+    <a class="insight-card scroll-fade" href="https://designindc.com/blog/the-importance-of-having-a-business-website-in-2025/" target="_blank" rel="noopener">
       <i class="ti ti-arrow-up-right ic-arr" aria-hidden="true"></i>
       <span class="ic-badge web"><i class="ti ti-world" aria-hidden="true"></i> Web</span>
-      <div class="ic-icon"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
-      <div class="ic-title">Nigeria's internet economy is accelerating</div>
-      <p class="ic-desc">Nigeria's internet user base crossed 100 million in 2023. Businesses without an online presence are invisible to the fastest-growing consumer segment on the continent.</p>
-      <div class="ic-source"><i class="ti ti-external-link" aria-hidden="true"></i> Statista — Nigeria</div>
+      <div class="ic-icon"><i class="ti ti-layout-grid" aria-hidden="true"></i></div>
+      <div class="ic-title">Why Every Business Needs a Website in 2025</div>
+      <p class="ic-desc">A forward-looking analysis of the digital landscape. It explains how a website serves as a "trust signal" in 2025 and 2026, where consumer expectations for 24/7 accessibility and mobile-optimized experiences have become the baseline for legitimacy. It also discusses the transition of websites from simple information pages to "business platforms" that handle real-time bookings and sales.</p>
+      <div class="ic-source"><i class="ti ti-external-link" aria-hidden="true"></i> Design In DC</div>
+    </a>
+
+    <a class="insight-card scroll-fade" href="https://globalworldconnection.com/digital-marketing/5-essential-benefits-of-having-a-business-website-in-2025/" target="_blank" rel="noopener">
+      <i class="ti ti-arrow-up-right ic-arr" aria-hidden="true"></i>
+      <span class="ic-badge web"><i class="ti ti-world" aria-hidden="true"></i> Web</span>
+      <div class="ic-icon"><i class="ti ti-layout-list" aria-hidden="true"></i></div>
+      <div class="ic-title">5 Essential Benefits of Business Websites</div>
+      <p class="ic-desc">This blog details how professional websites bridge the gap between local SMEs and global markets. It emphasizes the importance of First-Party Data—owning your customer insights rather than relying on social media algorithms—and how SEO integration ensures smaller businesses remain discoverable in a crowded marketplace.</p>
+      <div class="ic-source"><i class="ti ti-external-link" aria-hidden="true"></i> GWC Tech Hub</div>
     </a>
 
   </div>
@@ -1249,42 +1258,39 @@
 
   <div class="stories-grid">
 
-    <!-- Existing case from homepage — Lagos retailer -->
-    <a class="story-card live scroll-fade" href="#">
-      <div class="sc-header">
+    <!-- OGnite case study -->
+    <a class="story-card live scroll-fade" href="https://ogniteinternship.com/" target="_blank" style="grid-column: 1 / -1; padding: 2.5rem;">
+      <div class="sc-header" style="margin-bottom: 1.5rem;">
         <span class="sc-badge live-badge"><span class="sc-dot"></span> Published</span>
         <i class="ti ti-arrow-up-right sc-arr" aria-hidden="true"></i>
       </div>
-      <div class="sc-icon"><i class="ti ti-world" aria-hidden="true"></i></div>
-      <div class="sc-title">Zero to live in 4 days — Lagos retailer</div>
-      <p class="sc-desc">A local shop with no online presence went live with a branded site, contact form, and Google Maps integration in under a week.</p>
-      <div class="sc-tags">
-        <span class="ptag web">Web dev</span>
-        <span class="ptag">Next.js</span>
-        <span class="ptag">Tailwind</span>
-        <span class="ptag">Vercel</span>
+      <div class="sc-icon" style="width: auto; padding: 0 16px; margin-bottom: 1rem; border-radius: 20px; font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent); border-color: var(--accent); background: rgba(83, 74, 183, 0.1);">OGnite</div>
+      <div class="sc-title" style="font-size: 22px; margin-bottom: 1.5rem;">AI-Powered Internship Placement &amp; Vetting Platform</div>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 1.5rem;">
+        <div>
+          <strong style="color: var(--text); font-size: 14px; display: block; margin-bottom: 8px;">Problem:</strong>
+          <p class="sc-desc" style="margin-bottom: 0;">High noise in applications with students applying for unqualified roles, causing massive manual review bottlenecks for recruiters and verified companies.</p>
+        </div>
+        <div>
+          <strong style="color: var(--text); font-size: 14px; display: block; margin-bottom: 8px;">Solution:</strong>
+          <p class="sc-desc" style="margin-bottom: 0;">Designed and built a full-stack platform with an integrated AI scanning system that rigorously vets candidate skills and resumes against industry standards.</p>
+        </div>
+        <div>
+          <strong style="color: var(--text); font-size: 14px; display: block; margin-bottom: 8px;">Results:</strong>
+          <p class="sc-desc" style="margin-bottom: 0;">Achieved a <strong>4x interview rate</strong> for candidates, successfully onboarded <strong>100% verified companies</strong>, and provided 24/7 scalable application support.</p>
+        </div>
       </div>
-    </a>
 
-    <!-- Existing case from homepage — logistics firm -->
-    <a class="story-card live scroll-fade" href="#">
-      <div class="sc-header">
-        <span class="sc-badge live-badge"><span class="sc-dot"></span> Published</span>
-        <i class="ti ti-arrow-up-right sc-arr" aria-hidden="true"></i>
-      </div>
-      <div class="sc-icon"><i class="ti ti-robot" aria-hidden="true"></i></div>
-      <div class="sc-title">AI-first email ops for a logistics firm</div>
-      <p class="sc-desc">Cut manual email handling by 68% using a custom GPT-4 triage pipeline integrated with their existing inbox workflow.</p>
       <div class="sc-tags">
-        <span class="ptag ai">AI</span>
-        <span class="ptag auto">Automation</span>
-        <span class="ptag">OpenAI API</span>
-        <span class="ptag">Zapier</span>
+        <span class="ptag ai">AI Vetting</span>
+        <span class="ptag web">Full-stack Web Dev</span>
+        <span class="ptag auto">Workflow Automation</span>
       </div>
     </a>
 
     <!-- Placeholder 1 -->
-    <div class="story-card scroll-fade">
+    <div class="story-card scroll-fade" id="coming-soon-1">
       <span class="sc-badge soon">Coming soon</span>
       <div class="sc-title">Your business could be next</div>
       <p class="sc-desc">We document every project with verified outcomes. Work with us and your results go here — problem, solution, and the numbers that prove it.</p>

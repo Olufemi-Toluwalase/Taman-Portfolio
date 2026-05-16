@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chop & Chill — Lagos Kitchen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0e0b07;
+    --bg2: #181410;
+    --bg3: #221e18;
+    --text: #f5f0e8;
+    --text2: #a89e8c;
+    --text3: #5c554a;
+    --gold: #C8922A;
+    --gold-light: #E8B84B;
+    --gold-dim: rgba(200,146,42,0.12);
+    --gold-border: rgba(200,146,42,0.3);
+    --red: #B84040;
+    --border: rgba(245,240,232,0.08);
+    --border2: rgba(245,240,232,0.14);
+    --radius: 4px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* TAMAN BADGE */
+  .taman-badge {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: rgba(14,11,7,0.92);
+    border: 0.5px solid var(--border2);
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
+    text-decoration: none;
+    transition: border-color 0.15s;
+  }
+
+  .taman-badge:hover { border-color: var(--gold-border); }
+
+  .tb-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+  .tb-text { font-size: 11px; color: var(--text2); }
+  .tb-text span { color: var(--gold); font-weight: 500; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 0;
+    background: linear-gradient(to bottom, rgba(14,11,7,0.95), transparent);
+    transition: background 0.3s;
+  }
+
+  nav.scrolled { background: rgba(14,11,7,0.97); border-bottom: 0.5px solid var(--border); }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--text);
+    letter-spacing: 1px;
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--gold); font-style: italic; }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text2);
+    text-decoration: none;
+    transition: color 0.15s;
+    font-weight: 400;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 22px;
+    border-radius: 3px;
+    border: 1px solid var(--gold-border);
+    color: var(--gold);
+    background: var(--gold-dim);
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+
+  .nav-cta:hover { background: var(--gold); color: var(--bg); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 8rem 2rem 6rem;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 40%, rgba(200,146,42,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 80% 70%, rgba(184,64,64,0.06) 0%, transparent 60%);
+  }
+
+  /* Grid pattern */
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2rem;
+    padding: 6px 16px;
+    border: 0.5px solid var(--gold-border);
+    border-radius: 20px;
+    background: var(--gold-dim);
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-tag-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold-light); }
+  .hero-tag-text { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-light); font-weight: 500; }
+
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(52px, 9vw, 88px);
+    line-height: 0.92;
+    letter-spacing: -2px;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--text2);
+    line-height: 1.75;
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-gold {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 13px 30px;
+    border-radius: 3px;
+    border: none;
+    background: var(--gold);
+    color: var(--bg);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    transition: background 0.15s;
+  }
+
+  .btn-gold:hover { background: var(--gold-light); }
+
+  .btn-outline {
+    font-size: 14px;
+    font-weight: 400;
+    padding: 13px 30px;
+    border-radius: 3px;
+    border: 0.5px solid var(--border2);
+    color: var(--text2);
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    transition: all 0.15s;
+  }
+
+  .btn-outline:hover { border-color: var(--text2); color: var(--text); }
+
+  /* SCROLL INDICATOR */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: fadeUp 0.6s 0.5s ease both;
+  }
+
+  .scroll-hint-text { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollDown 1.5s ease-in-out infinite;
+  }
+
+  @keyframes scrollDown {
+    0%   { transform: scaleY(0); transform-origin: top; }
+    50%  { transform: scaleY(1); transform-origin: top; }
+    51%  { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* SECTION */
+  section { padding: 6rem 0; }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 1.5rem;
+  }
+
+  .sl-line { width: 30px; height: 1px; background: var(--gold); }
+
+  .sl-text {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .section-title em { font-style: italic; font-weight: 300; color: var(--gold); }
+
+  .section-desc {
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.75;
+    font-weight: 300;
+    max-width: 500px;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+
+  .about-stat {
+    background: var(--bg2);
+    padding: 1.25rem 1.5rem;
+  }
+
+  .as-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 32px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .as-label { font-size: 12px; color: var(--text3); }
+
+  .about-visual {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-visual::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, var(--gold-dim), transparent 70%);
+    border-radius: 50%;
+  }
+
+  .av-emoji { font-size: 64px; margin-bottom: 1rem; display: block; }
+
+  .av-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .av-sub { font-size: 13px; color: var(--text2); }
+
+  /* MENU */
+  .menu-tabs {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 2rem;
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 4px;
+    width: fit-content;
+  }
+
+  .tab-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 20px;
+    border-radius: 3px;
+    border: none;
+    background: transparent;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .tab-btn.active { background: var(--gold); color: var(--bg); }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .menu-item {
+    background: var(--bg2);
+    padding: 1.75rem;
+    transition: background 0.15s;
+  }
+
+  .menu-item:hover { background: var(--bg3); }
+
+  .mi-emoji { font-size: 28px; margin-bottom: 1rem; display: block; }
+
+  .mi-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .mi-desc { font-size: 12px; color: var(--text2); line-height: 1.55; margin-bottom: 1rem; font-weight: 300; }
+
+  .mi-price {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--gold);
+  }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .info-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .info-icon {
+    width: 38px;
+    height: 38px;
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    background: var(--bg2);
+  }
+
+  .info-label { font-size: 11px; color: var(--text3); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px; }
+  .info-value { font-size: 14px; color: var(--text); line-height: 1.5; }
+
+  /* CONTACT FORM */
+  .contact-form {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+  }
+
+  .cf-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  input[type="text"], input[type="email"], input[type="tel"], textarea, select {
+    width: 100%;
+    background: var(--bg3);
+    border: 0.5px solid var(--border2);
+    border-radius: var(--radius);
+    padding: 11px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+    appearance: none;
+  }
+
+  input:focus, textarea:focus, select:focus { border-color: var(--gold); }
+  input::placeholder, textarea::placeholder { color: var(--text3); }
+  textarea { resize: none; min-height: 90px; line-height: 1.65; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .form-group { margin-bottom: 10px; }
+
+  .form-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text3);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .form-submit {
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 12px;
+    border-radius: var(--radius);
+    border: none;
+    background: var(--gold);
+    color: var(--bg);
+    cursor: pointer;
+    margin-top: 12px;
+    transition: background 0.15s;
+  }
+
+  .form-submit:hover { background: var(--gold-light); }
+
+  /* SUCCESS MSG */
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 2rem;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .success-msg.visible { display: flex; }
+
+  .success-icon { font-size: 36px; }
+  .success-title { font-family: 'Fraunces', serif; font-weight: 700; font-size: 20px; color: var(--text); }
+  .success-sub { font-size: 13px; color: var(--text2); }
+
+  /* FOOTER */
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 2.5rem 0;
+    background: var(--bg2);
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 18px;
+    color: var(--text);
+  }
+
+  .footer-logo span { color: var(--gold); font-style: italic; }
+
+  .footer-copy { font-size: 12px; color: var(--text3); }
+
+  .footer-links { display: flex; gap: 20px; }
+
+  .footer-link {
+    font-size: 12px;
+    color: var(--text3);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .footer-link:hover { color: var(--gold); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TAMAN CREDIT BADGE -->
+<a href="index.html" class="taman-badge" target="_blank">
+  <span class="tb-dot"></span>
+  <span class="tb-text">Site by <span>TAMAN Agency</span></span>
+</a>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Chop <span>&</span> Chill</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#contact">Find us</a></li>
+      <li><a href="#contact" class="nav-cta">Book a table</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span class="hero-tag-dot"></span>
+      <span class="hero-tag-text">Open daily · Lagos Island</span>
+    </div>
+    <h1 class="hero-title">
+      Real food.<br><em>Real Lagos.</em>
+    </h1>
+    <p class="hero-sub">
+      Home-cooked Nigerian flavours, fresh ingredients, and a warm spot to eat, drink, and chill — right in the heart of Lagos Island.
+    </p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-gold">See our menu →</a>
+      <a href="#contact" class="btn-outline">Book a table</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span class="scroll-hint-text">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="border-top: 0.5px solid var(--border);">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <div class="section-label">
+          <span class="sl-line"></span>
+          <span class="sl-text">Our story</span>
+        </div>
+        <h2 class="section-title">Lagos flavour,<br><em>no shortcuts.</em></h2>
+        <p class="section-desc">
+          Chop & Chill started as a backyard kitchen in 2019. Today we serve hundreds of Lagosians every week — same recipes, same love, just a bigger table. Every dish is made fresh, every day.
+        </p>
+        <div class="about-stats">
+          <div class="about-stat">
+            <div class="as-num">6+</div>
+            <div class="as-label">Years serving Lagos</div>
+          </div>
+          <div class="about-stat">
+            <div class="as-num">300+</div>
+            <div class="as-label">Plates daily</div>
+          </div>
+          <div class="about-stat">
+            <div class="as-num">100%</div>
+            <div class="as-label">Fresh ingredients</div>
+          </div>
+          <div class="about-stat">
+            <div class="as-num">4.9★</div>
+            <div class="as-label">Customer rating</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual">
+        <span class="av-emoji">🍲</span>
+        <div class="av-title">Chop & Chill Kitchen</div>
+        <div class="av-sub">Lagos Island, since 2019</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu" style="background: var(--bg2); border-top: 0.5px solid var(--border);">
+  <div class="container">
+    <div style="margin-bottom:2.5rem;">
+      <div class="section-label">
+        <span class="sl-line"></span>
+        <span class="sl-text">What we serve</span>
+      </div>
+      <h2 class="section-title">The <em>menu</em></h2>
+      <p class="section-desc">Everything made in-house. No frozen shortcuts.</p>
+    </div>
+
+    <div class="menu-tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'mains')">Mains</button>
+      <button class="tab-btn" onclick="switchTab(this,'soups')">Soups</button>
+      <button class="tab-btn" onclick="switchTab(this,'drinks')">Drinks</button>
+    </div>
+
+    <div id="menu-mains" class="menu-section">
+      <div class="menu-grid">
+        <div class="menu-item">
+          <span class="mi-emoji">🍚</span>
+          <div class="mi-name">Jollof Rice & Chicken</div>
+          <p class="mi-desc">Party-style smoky jollof with grilled chicken. The classic that needs no introduction.</p>
+          <div class="mi-price">₦3,500</div>
+        </div>
+        <div class="menu-item">
+          <span class="mi-emoji">🐟</span>
+          <div class="mi-name">Fried Fish & Agege Bread</div>
+          <p class="mi-desc">Crispy catfish, peppered sauce, and fresh Agege bread. Lagos breakfast done right.</p>
+          <div class="mi-price">₦2,800</div>
+        </div>
+        <div class="menu-item">
+          <span class="mi-emoji">🍖</span>
+          <div class="mi-name">Pepper Soup Goat Meat</div>
+          <p class="mi-desc">Slow-cooked goat meat in rich, aromatic pepper soup broth. Served hot.</p>
+          <div class="mi-price">₦4,200</div>
+        </div>
+        <div class="menu-item">
+          <span class="mi-emoji">🫘</span>
+          <div class="mi-name">Beans & Plantain</div>
+          <p class="mi-desc">Honey beans cooked with crayfish and palm oil, served with fried sweet plantain.</p>
+          <div class="mi-price">₦1,800</div>
+        </div>
+        <div class="menu-item">
+          <span class="mi-emoji">🍛</span>
+          <div class="mi-name">Ofada Rice & Ayamase</div>
+          <p class="mi-desc">Local Ofada rice with the legendary green pepper stew. Not for the faint-hearted.</p>
+          <div class="mi-price">₦3,900</div>
+        </div>
+        <div class="menu-item">
+          <span class="mi-emoji">🥩</span>
+          <div class="mi-name">Suya Platter</div>
+          <p class="mi-desc">Grilled spiced beef skewers with sliced onions, tomatoes, and suya spice dust.</p>
+          <div class="mi-price">₦2,500</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="menu-soups" class="menu-section" style="display:none;">
+      <div class="menu-grid">
+        <div class="menu-item">
+          <span class="mi-emoji">🍵</span>
+          <div class="mi-name">Egusi Soup</div>
+          <p class="mi-desc">Ground melon seeds cooked with assorted meat, stockfish, and leafy greens.</p>
+          <div class="mi-price">₦3,200</div>
+        </div>
+        <div class="menu-item">
+          <span class="mi-emoji">🌿</span>
+          <div class="mi-name">Edikang Ikong</div>
+          <p class="mi-desc">Rich Calabar-style vegetable soup with periwinkle and assorted protein.</p>
+          <div class="mi-price">₦3,800</div>
+        </div>
+        <div class="menu-item">
+          <span class="mi-emoji">🟤</span>
+          <div class="mi-name">Banga Soup & Starch</div>
+          <p class="mi-desc">Palm fruit soup with Delta spices, served with smooth starch.</p>
+          <div class="mi-price">₦3,500</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="menu-drinks" class="menu-section" style="display:none;">
+      <div class="menu-grid">
+        <div class="menu-item">
+          <span class="mi-emoji">🥤</span>
+          <div class="mi-name">Zobo</div>
+          <p class="mi-desc">Chilled hibiscus drink, lightly spiced with ginger and pineapple flavour.</p>
+          <div class="mi-price">₦800</div>
+        </div>
+        <div class="menu-item">
+          <span class="mi-emoji">🌰</span>
+          <div class="mi-name">Kunu</div>
+          <p class="mi-desc">Traditional grain drink made fresh daily. Smooth, nutty, naturally sweet.</p>
+          <div class="mi-price">₦700</div>
+        </div>
+        <div class="menu-item">
+          <span class="mi-emoji">🍹</span>
+          <div class="mi-name">Chapman</div>
+          <p class="mi-desc">Nigeria's favourite cocktail — Ribena, Fanta, cucumber, lemon, and grenadine.</p>
+          <div class="mi-price">₦1,200</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="border-top: 0.5px solid var(--border);">
+  <div class="container">
+    <div style="margin-bottom:2.5rem;">
+      <div class="section-label">
+        <span class="sl-line"></span>
+        <span class="sl-text">Find us</span>
+      </div>
+      <h2 class="section-title">Come <em>eat.</em></h2>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div>
+            <div class="info-label">Address</div>
+            <div class="info-value">14 Kofo Abayomi Street,<br>Victoria Island, Lagos</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">🕐</div>
+          <div>
+            <div class="info-label">Opening hours</div>
+            <div class="info-value">Mon – Sat: 8:00am – 10:00pm<br>Sunday: 10:00am – 8:00pm</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📞</div>
+          <div>
+            <div class="info-label">Phone / WhatsApp</div>
+            <div class="info-value">+234 801 234 5678</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">✉️</div>
+          <div>
+            <div class="info-label">Email</div>
+            <div class="info-value">hello@chopandchill.ng</div>
+          </div>
+        </div>
+
+        <!-- MAP EMBED PLACEHOLDER -->
+        <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;">
+          <div style="font-size:24px;margin-bottom:8px;">🗺️</div>
+          <div style="font-size:13px;color:var(--text2);">Google Maps</div>
+          <div style="font-size:12px;color:var(--text3);margin-top:4px;">14 Kofo Abayomi St, VI, Lagos</div>
+          <a href="https://maps.google.com/?q=Victoria+Island+Lagos" target="_blank"
+             style="display:inline-block;margin-top:12px;font-size:12px;color:var(--gold);text-decoration:none;">
+            Open in Maps →
+          </a>
+        </div>
+      </div>
+
+      <!-- BOOKING FORM -->
+      <div class="contact-form">
+        <div class="cf-title">Reserve a table</div>
+
+        <div id="form-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Full name</label>
+              <input type="text" placeholder="Your name" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input type="tel" placeholder="+234..." />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Date</label>
+              <input type="text" placeholder="e.g. Sat 24 May" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Time</label>
+              <input type="text" placeholder="e.g. 1:00pm" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Party size</label>
+            <select>
+              <option>1 – 2 people</option>
+              <option>3 – 5 people</option>
+              <option>6 – 10 people</option>
+              <option>11+ (event)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Special requests</label>
+            <textarea placeholder="Dietary needs, occasions, anything else..."></textarea>
+          </div>
+          <button class="form-submit" onclick="submitForm()">Book my table →</button>
+        </div>
+
+        <div class="success-msg" id="success-msg">
+          <div class="success-icon">✅</div>
+          <div class="success-title">Booking received!</div>
+          <div class="success-sub">We'll confirm via WhatsApp within the hour. See you soon!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">Chop <span>&</span> Chill</span>
+    <span class="footer-copy">Lagos Island · Est. 2019</span>
+    <div class="footer-links">
+      <a class="footer-link" href="#">Instagram</a>
+      <a class="footer-link" href="#">WhatsApp</a>
+      <a class="footer-link" href="#">Menu PDF</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Sticky nav
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Menu tabs
+  function switchTab(btn, section) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.menu-section').forEach(s => s.style.display = 'none');
+    btn.classList.add('active');
+    document.getElementById('menu-' + section).style.display = 'block';
+  }
+
+  // Form submit
+  function submitForm() {
+    document.getElementById('form-body').style.display = 'none';
+    document.getElementById('success-msg').classList.add('visible');
+  }
+</script>
+</body>
+</html>
